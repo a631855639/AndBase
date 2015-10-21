@@ -6,7 +6,7 @@
     android:background="#f0f0f0"
     android:orientation="vertical" >
     
-	<XListView
+	<com.helen.andbase.widget.xlist.XListView
 	    android:id="@+id/xListView"
         android:layout_width="match_parent"
         android:layout_height="fill_parent"

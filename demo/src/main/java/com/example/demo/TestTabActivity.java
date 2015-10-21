@@ -1,0 +1,36 @@
+package com.example.demo;
+
+import android.support.v4.app.Fragment;
+
+import com.helen.andbase.activity.HBaseTabPageActivity;
+
+import java.util.ArrayList;
+import java.util.List;
+
+
+public class TestTabActivity extends HBaseTabPageActivity {
+	private String[] titles=new String[]{"选项卡1","选项卡2"};
+	private List<Fragment> fragments;
+	@Override
+	public String[] getTitles() {
+		return titles;
+	}
+
+	@Override
+	public int[] getIcons() {
+		return null;
+	}
+
+	@Override
+	public List<? extends Fragment> getFragments() {
+		return fragments;
+	}
+	@Override
+	public void init() {
+		setTitle("选项卡测试");
+		fragments=new ArrayList<Fragment>();
+		fragments.add(new TestFragment("选项卡1"));
+		fragments.add(new TestFragment("选项卡2"));
+	}
+
+}

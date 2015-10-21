@@ -88,4 +88,11 @@ public class EnvironmentUtil {
         LocationManager alm = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
         return alm.isProviderEnabled(LocationManager.GPS_PROVIDER);
     }
+
+    /**
+     * 获取包名
+     */
+    public static String getPackageName(Context context){
+        return context.getPackageName();
+    }
 }

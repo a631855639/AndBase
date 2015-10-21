@@ -11,7 +11,7 @@ import android.widget.BaseAdapter;
 import android.widget.Toast;
 
 import com.helen.andbase.R;
-import com.helen.andbase.application.HBaseApp;
+import com.helen.andbase.application.HBaseApplication;
 import com.helen.andbase.widget.xlist.XListView;
 
 import java.text.DateFormat;
@@ -28,7 +28,7 @@ import java.util.Locale;
  * 带有XListView的Fragment
  */
 public abstract class HBaseXListViewFragment<T> extends Fragment implements XListView.IXListViewListener {
-	protected HBaseApp mBaseApp;
+	protected HBaseApplication mBaseApp;
 	private XListView mListView;
 	protected int page_size=10;
 	protected int current_page=1;
@@ -40,7 +40,7 @@ public abstract class HBaseXListViewFragment<T> extends Fragment implements XLis
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		View view=inflater.inflate(R.layout.fragment_base_x_list, container,false);
-		mBaseApp=(HBaseApp) getActivity().getApplication();
+		mBaseApp=(HBaseApplication) getActivity().getApplication();
 		initListView(view);
 		initData();
 		mListView.setAdapter(getAdapter());
