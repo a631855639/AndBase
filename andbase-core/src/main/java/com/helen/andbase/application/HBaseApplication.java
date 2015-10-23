@@ -26,9 +26,18 @@ public class HBaseApplication extends Application implements SystemEvent.IEventL
 	@Override
 	public void onCreate() {
 		super.onCreate();
-		SystemEvent.addListener(LOGOUT_ID,this);
+		SystemEvent.addListener(LOGOUT_ID, this);
 		HCrashHandler.init(this);
-		ServiceAPI.init(this);
+		if(isAuthorityCheck()) {
+			ServiceAPI.init(this);
+		}
+	}
+
+	/**
+	 * 是否权限检测
+	 */
+	protected boolean isAuthorityCheck(){
+		return true;
 	}
 
 	protected void initImageLoader(int failImgId,int emptyImgId,int loadingImgId) {
