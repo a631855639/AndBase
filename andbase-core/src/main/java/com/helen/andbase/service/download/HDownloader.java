@@ -1,7 +1,7 @@
 package com.helen.andbase.service.download;
 
 /**
- * Created by 李晓伟 on 2015/10/15.
+ * Created by Helen on 2015/10/15.
  * 下载器
  */
 public class HDownloader {

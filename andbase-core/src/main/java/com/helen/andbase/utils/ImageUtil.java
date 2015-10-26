@@ -15,7 +15,7 @@ import java.io.FileOutputStream;
 import java.io.InputStream;
 
 /**
- * Created by 李晓伟 on 2015/10/16.
+ * Created by Helen on 2015/10/16.
  * 图像工具类
  */
 public class ImageUtil {

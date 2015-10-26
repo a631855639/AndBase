@@ -29,6 +29,7 @@ import java.util.Locale;
  */
 public abstract class HBaseXListViewFragment<T> extends Fragment implements XListView.IXListViewListener {
 	protected HBaseApplication mBaseApp;
+	protected int mEmptyDataResId = R.string.empty_data;
 	private XListView mListView;
 	protected int page_size=10;
 	protected int current_page=1;
@@ -111,7 +112,7 @@ public abstract class HBaseXListViewFragment<T> extends Fragment implements XLis
 		}
 		getAdapter().notifyDataSetChanged();
 		if(totalSize==0){
-			Toast.makeText(getActivity(), "暂无相关数据", Toast.LENGTH_SHORT).show();
+			Toast.makeText(getActivity(), mEmptyDataResId, Toast.LENGTH_SHORT).show();
 		}
 	}
 	/**

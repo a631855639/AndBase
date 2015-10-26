@@ -5,7 +5,7 @@ import android.text.TextUtils;
 import java.io.FileNotFoundException;
 
 /**
- * Created by 李晓伟 on 2015/10/15.
+ * Created by Helen on 2015/10/15.
  * 下载器配置项
  */
 class HDownloadConfig {

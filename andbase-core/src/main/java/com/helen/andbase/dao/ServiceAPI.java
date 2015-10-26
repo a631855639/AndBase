@@ -15,7 +15,7 @@ import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.listener.FindListener;
 
 /**
- * Created by 李晓伟 on 2015/10/21.
+ * Created by Helen on 2015/10/21.
  *
  */
 public class ServiceAPI {

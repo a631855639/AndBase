@@ -11,14 +11,14 @@ import android.net.NetworkInfo;
 import android.net.Uri;
 
 /**
- * Created by 李晓伟 on 2015/10/15.
+ * Created by Helen on 2015/10/15.
  * 系统环境Util
  */
 public class EnvironmentUtil {
 
     /**
      *
-     *  李晓伟
+     *  Helen
      * 2014-8-26 下午4:07:19
      * @return
      * 判断网络连接是否正常

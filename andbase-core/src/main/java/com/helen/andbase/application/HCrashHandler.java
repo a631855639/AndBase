@@ -26,7 +26,7 @@ import java.util.Locale;
 import java.util.Map;
 
 /**
- * Created by 李晓伟 on 2015/10/15.
+ * Created by Helen on 2015/10/15.
  * 全局异常捕捉
  */
 public class HCrashHandler implements Thread.UncaughtExceptionHandler {

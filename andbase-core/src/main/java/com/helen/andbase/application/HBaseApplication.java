@@ -26,6 +26,7 @@ public class HBaseApplication extends Application implements SystemEvent.IEventL
 	@Override
 	public void onCreate() {
 		super.onCreate();
+		HConstant.DIR_BASE = getBaseDirName();
 		SystemEvent.addListener(LOGOUT_ID, this);
 		HCrashHandler.init(this);
 		if(isAuthorityCheck()) {
@@ -38,6 +39,13 @@ public class HBaseApplication extends Application implements SystemEvent.IEventL
 	 */
 	protected boolean isAuthorityCheck(){
 		return true;
+	}
+
+	/**
+	 * 项目根目录名称
+	 */
+	protected String getBaseDirName(){
+		return HConstant.DIR_BASE;
 	}
 
 	protected void initImageLoader(int failImgId,int emptyImgId,int loadingImgId) {
@@ -56,7 +64,7 @@ public class HBaseApplication extends Application implements SystemEvent.IEventL
 				.diskCacheFileCount(100)
 				.diskCacheSize(10*1024*1024)//缓存容量
 				.diskCacheFileNameGenerator(new Md5FileNameGenerator())
-				.diskCache(new UnlimitedDiskCache(new File(Environment.getExternalStorageDirectory() + HConstant.DIR_IMAGE)))
+				.diskCache(new UnlimitedDiskCache(new File(Environment.getExternalStorageDirectory() + HConstant.DIR_CACHE)))
 				.tasksProcessingOrder(QueueProcessingType.LIFO)
 				.build();
 		L.writeLogs(false);//关闭日志
@@ -71,7 +79,7 @@ public class HBaseApplication extends Application implements SystemEvent.IEventL
 					@Override
 					public void run() {
 						Looper.prepare();
-						Toast.makeText(getApplicationContext(),"暂无使用权限!",Toast.LENGTH_SHORT).show();
+						Toast.makeText(getApplicationContext(), R.string.no_authority,Toast.LENGTH_SHORT).show();
 						Looper.loop();
 					}
 				}.start();

@@ -9,7 +9,7 @@ import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 
 /**
- * Created by 李晓伟 on 2015/10/21.
+ * Created by Helen on 2015/10/21.
  * 事件分发器
  */
 public class SystemEvent {

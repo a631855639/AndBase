@@ -3,7 +3,7 @@ package com.helen.andbase.entity;
 import cn.bmob.v3.BmobObject;
 
 /**
- * Created by 李晓伟 on 2015/10/21.
+ * Created by Helen on 2015/10/21.
  *
  */
 public class AppInfo extends BmobObject{

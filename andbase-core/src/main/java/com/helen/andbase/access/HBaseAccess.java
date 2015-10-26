@@ -41,7 +41,7 @@ import java.util.concurrent.Executors;
 
 /**
  * 
- * 李晓伟
+ * Helen
  *  2015-3-4 上午9:17:52
  */
 public class HBaseAccess<T>{
@@ -111,7 +111,7 @@ public class HBaseAccess<T>{
 	}
 	/**
 	 * 
-	 *  李晓伟
+	 *  Helen
 	 * 2015-3-3 下午5:27:11
 	 *  执行
 	 */
@@ -132,7 +132,7 @@ public class HBaseAccess<T>{
 	}
 	/**
 	 * 
-	 *  李晓伟
+	 *  Helen
 	 *  2015-3-3 下午5:26:39
 	 *  Task
 	 */
@@ -189,7 +189,7 @@ public class HBaseAccess<T>{
 	}
 	/**
 	 * 
-	 *  李晓伟
+	 *  Helen
 	 * 2015-3-3 下午5:24:49
 	 *  访问url，获取数据
 	 */

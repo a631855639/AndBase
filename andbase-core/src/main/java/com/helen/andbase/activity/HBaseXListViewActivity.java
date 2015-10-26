@@ -22,6 +22,7 @@ import java.util.Locale;
  *  带有XListView的activity
  */
 public abstract class HBaseXListViewActivity<T> extends HTitleActivity implements XListView.IXListViewListener{
+	protected int mEmptyDataResId = R.string.empty_data;
 	private XListView mListView;
 	protected int page_size=10;
 	protected int current_page=1;
@@ -97,7 +98,7 @@ public abstract class HBaseXListViewActivity<T> extends HTitleActivity implement
 		}
 		getAdapter().notifyDataSetChanged();
 		if(totalSize==0){
-			showMsg(this, R.string.empty_data);
+			showMsg(this, mEmptyDataResId);
 		}
 	}
 	/**

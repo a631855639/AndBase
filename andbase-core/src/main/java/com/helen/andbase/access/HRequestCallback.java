@@ -31,7 +31,7 @@ public abstract class HRequestCallback<T>{
 	public static final int RESULT_SERVER_EXCEPTION=1005;
 	/**
 	 * 
-	 *  李晓伟
+	 *  Helen
 	 *  2015-3-4 下午12:54:14
 	 *  获取数据失败时调用
 	 */
@@ -40,14 +40,14 @@ public abstract class HRequestCallback<T>{
 	}
 	/**
 	 * 
-	 *  李晓伟
+	 *  Helen
 	 *  2015-3-4 下午12:54:30
 	 *  获取数据成功时调用，在此处理业务逻辑
 	 */
 	public abstract void onSuccess(T result);
 	/**
 	 * 
-	 *  李晓伟
+	 *  Helen
 	 *  2015-3-4 下午12:54:51
 	 *  解析json格式，转换对应实体类
 	 */
