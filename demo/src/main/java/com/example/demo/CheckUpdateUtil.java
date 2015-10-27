@@ -20,7 +20,6 @@ import android.widget.Toast;
 import com.helen.andbase.access.HRequestCallback;
 import com.helen.andbase.service.APKDownloadService;
 import com.helen.andbase.utils.AppManager;
-import com.helen.andbase.utils.JsonUtil;
 
 /**
  * 
@@ -54,11 +53,6 @@ public class CheckUpdateUtil {
 	public void check(final boolean isShow) {
 		HRequestCallback<UpdateInfo> requestCallback=new HRequestCallback<UpdateInfo>() {
 			@Override
-			public UpdateInfo parseJson(String jsonStr) {
-				
-				return (UpdateInfo) JsonUtil.jsonToBean(jsonStr, UpdateInfo.class);
-			}
-			@Override
 			public void onSuccess(UpdateInfo updateInfo) {
 				setNewVersion(false);
 				if(isShow){
@@ -86,9 +80,9 @@ public class CheckUpdateUtil {
 				}
 			}
 		};
-		UpdateAccess access=new UpdateAccess(mContext, requestCallback);
+		/*UpdateAccess access=new UpdateAccess(mContext, requestCallback);
 		access.setIsShow(isShow);
-		access.execute(getVersionName(mContext));
+		access.execute(getVersionName(mContext));*/
 	}
 	/**
 	 * 

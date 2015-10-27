@@ -6,8 +6,9 @@ import android.os.Message;
 import android.text.TextUtils;
 import android.util.Log;
 
-import com.helen.andbase.widget.dialog.CustomProgressDialog;
 import com.helen.andbase.utils.EnvironmentUtil;
+import com.helen.andbase.utils.JsonUtil;
+import com.helen.andbase.widget.dialog.CustomProgressDialog;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.NameValuePair;
@@ -30,6 +31,8 @@ import org.apache.http.util.EntityUtilsHC4;
 
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
 import java.net.SocketException;
 import java.net.SocketTimeoutException;
 import java.util.List;
@@ -43,26 +46,37 @@ import java.util.concurrent.Executors;
  * 
  * Helen
  *  2015-3-4 上午9:17:52
+ *  note:T不能再包含有泛型
  */
-public class HBaseAccess<T>{
+public class  HBaseAccess<T>{
 	private CustomProgressDialog dialog;
-	private static final ExecutorService executorService=Executors.newCachedThreadPool();
+	private static final ExecutorService executorService = Executors.newCachedThreadPool();
 	private Handler handler;
 	private HRequestCallback<T> callback;
 	private Context mContext;
 
 
 	private boolean mIsShow=true;
+	private Class<?> entityClass;
 
-
+	@SuppressWarnings("unchecked")
 	public HBaseAccess(final Context c,final HRequestCallback<T> requestCallback){
 		this.callback=requestCallback;
 		this.mContext=c;
 		dialog = new CustomProgressDialog(c, "努力加载中...");
+		ParameterizedType pt = (ParameterizedType)getClass().getGenericSuperclass();
+		Type[] types = pt.getActualTypeArguments();
+		try {//entity
+			entityClass = (Class<?>) types[0];
+		}catch (Exception e){//entityList
+			pt = (ParameterizedType)types[0];
+			types = pt.getActualTypeArguments();
+			entityClass = (Class<?>) types[0];
+		}
 		initHandler();
 	}
 
-
+	@SuppressWarnings("unchecked")
 	private void initHandler(){
 		handler=new Handler(new Handler.Callback() {
 			
@@ -136,6 +150,7 @@ public class HBaseAccess<T>{
 	 *  2015-3-3 下午5:26:39
 	 *  Task
 	 */
+	@SuppressWarnings("unchecked")
 	class TaskRunnable implements Runnable{
 		private String url;
 		private List<NameValuePair> nvps;
@@ -158,11 +173,16 @@ public class HBaseAccess<T>{
 					}else{
 						result=_postFile(url, nvps, files);
 					}
-//					result = "[{\"version\":\"1.0\",\"size\":\"123456\",\"updateContent\":\"xxxxx\",\"downloadUrl\":\"xxxxx\",\"force_flag\":\"true\",\"status\":\"ok\",\"remark\":\"请求成功\"}" +
-//							",{\"version\":\"1.0\",\"size\":\"123456\",\"updateContent\":\"xxxxx\",\"downloadUrl\":\"xxxxx\",\"force_flag\":\"true\",\"status\":\"ok\",\"remark\":\"请求成功\"}]";
+					//result = "{\"isSuccess\":true,\"message\":\"成功\",\"data\":{\"version\":\"1.0\",\"size\":\"123456\",\"updateContent\":\"xxxxx\",\"downloadUrl\":\"xxxxx\",\"force_flag\":\"true\",\"status\":\"ok\",\"remark\":\"请求成功\"}}";
+					System.out.println(result);
 					if(!TextUtils.isEmpty(result)){
 						if(callback!=null){
-							T t=callback.parseJson(result);
+							T t;
+							try {
+								t = (T) JsonUtil.jsonToBean(result, entityClass);
+							}catch (Exception e){
+								t = (T) JsonUtil.json2List(result,entityClass);
+							}
 							if(t!=null){
 								msg.obj=t;
 								msg.what=HRequestCallback.RESULT_SUCCESS;

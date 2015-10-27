@@ -6,7 +6,6 @@ import android.widget.TextView;
 
 import com.helen.andbase.access.HRequestCallback;
 import com.helen.andbase.activity.HTitleActivity;
-import com.helen.andbase.utils.JsonUtil;
 
 
 public class TestRequestActivity extends HTitleActivity {
@@ -21,7 +20,7 @@ public class TestRequestActivity extends HTitleActivity {
 	}
 
 	private void request() {
-		HRequestCallback<UpdateInfo> requestCallback = new HRequestCallback<UpdateInfo>() {
+		HRequestCallback<Respond> requestCallback = new HRequestCallback<Respond>() {
 			
 			@Override
 			public void onFail(Context c, String errorMsg) {
@@ -30,12 +29,8 @@ public class TestRequestActivity extends HTitleActivity {
 			}
 			
 			@Override
-			public void onSuccess(UpdateInfo result) {
+			public void onSuccess(Respond result) {
 				msg.setText(result.toString());
-			}
-			@Override
-			public UpdateInfo parseJson(String jsonStr) {
-				return (UpdateInfo) JsonUtil.jsonToBean(jsonStr, UpdateInfo.class);
 			}
 		};
 		UpdateAccess access = new UpdateAccess(this, requestCallback);

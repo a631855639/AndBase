@@ -45,11 +45,4 @@ public abstract class HRequestCallback<T>{
 	 *  获取数据成功时调用，在此处理业务逻辑
 	 */
 	public abstract void onSuccess(T result);
-	/**
-	 * 
-	 *  Helen
-	 *  2015-3-4 下午12:54:51
-	 *  解析json格式，转换对应实体类
-	 */
-	public abstract T parseJson(String jsonStr);
 }

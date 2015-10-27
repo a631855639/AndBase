@@ -17,9 +17,9 @@ import java.util.List;
  * 2015-3-25 上午10:09:32
  * 检测更新接口
  */
-public class UpdateAccess extends HBaseAccess<UpdateInfo> {
+public class UpdateAccess extends HBaseAccess<Respond> {
 
-	public UpdateAccess(Context c, HRequestCallback<UpdateInfo> requestCallback) {
+	public UpdateAccess(Context c, HRequestCallback<Respond> requestCallback) {
 		super(c, requestCallback);
 	}
 

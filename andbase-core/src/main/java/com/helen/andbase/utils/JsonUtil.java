@@ -57,9 +57,9 @@ public class JsonUtil {
 		if(!TextUtils.isEmpty(json)) {
 			Gson gson = new Gson();
 			try {
-				ArrayList<JsonObject> list = gson.fromJson(json, new TypeToken<List<JsonObject>>() {}.getType());
+				List<JsonObject> list = gson.fromJson(json, new TypeToken<List<JsonObject>>() {}.getType());
 				if (list != null) {
-					ArrayList<T> resultList = new ArrayList<>();
+					List<T> resultList = new ArrayList<>();
 					for (JsonObject t : list) {
 						resultList.add(gson.fromJson(t, clazz));
 					}
