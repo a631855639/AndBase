@@ -1,5 +1,6 @@
 package com.helen.andbase.utils;
 
+import android.app.ActivityManager;
 import android.app.AlertDialog;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -9,6 +10,8 @@ import android.location.LocationManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
+
+import java.util.List;
 
 /**
  * Created by Helen on 2015/10/15.
@@ -94,5 +97,25 @@ public class EnvironmentUtil {
      */
     public static String getPackageName(Context context){
         return context.getPackageName();
+    }
+
+    /**
+     * 根据进程id获取进程名称
+     * @param context context
+     * @param pid 进程id
+     * @return
+     */
+    public static String getProcessName(Context context, int pid){
+        ActivityManager am = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
+        List<ActivityManager.RunningAppProcessInfo> runningApps = am.getRunningAppProcesses();
+        if (runningApps == null) {
+            return null;
+        }
+        for (ActivityManager.RunningAppProcessInfo procInfo : runningApps) {
+            if (procInfo.pid == pid) {
+                return procInfo.processName;
+            }
+        }
+        return null;
     }
 }

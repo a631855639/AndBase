@@ -39,6 +39,7 @@ public class HTitleActivity extends HBaseActivity{
 	private TextView mTitleView;
 	private TextView mErrorView;
 	private AnimationDrawable anim;
+	private LinearLayout mLayoutTitle;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -54,7 +55,7 @@ public class HTitleActivity extends HBaseActivity{
 
 	@Override
 	public void setContentView(View view) {
-		mRootView = (LinearLayout) View.inflate(this,R.layout.activity_base,null);
+		mRootView = (LinearLayout) View.inflate(this, R.layout.activity_base, null);
 		//init title
 		BaseOnClickListener listener=new BaseOnClickListener();
 		mLayoutContent=(FrameLayout) mRootView.findViewById(R.id.fragment_content);
@@ -63,6 +64,7 @@ public class HTitleActivity extends HBaseActivity{
 		mLeftIcon.setOnClickListener(listener);
 		mRightIcon=(ImageView) mRootView.findViewById(R.id.iv_right_icon);
 		mRightIcon.setOnClickListener(listener);
+		mLayoutTitle = (LinearLayout) mRootView.findViewById(R.id.layout_action_bar);
 		setCustomView(mLayoutCustomView);
 		hideErrorView();
 		mLayoutContent.addView(view);
@@ -164,25 +166,47 @@ public class HTitleActivity extends HBaseActivity{
 	 * 
 	 *  Helen
 	 * 2015-3-9 下午5:11:39
-	 *  数据请求失败，显示的页面
+	 *  show the error message
 	 */
 	protected void onLoadFail(){
-		if(mLayoutError==null){
-			View view=((ViewStub) mRootView.findViewById(R.id.vs_error)).inflate();
-			mLayoutError=(RelativeLayout) view.findViewById(R.id.layout_error);
-			mLayoutError.setOnClickListener(new BaseOnClickListener());
-			mErrorView=(TextView) view.findViewById(R.id.img_error);
+		if(mErrorView == null){
+			mErrorView=(TextView) getLayoutError().findViewById(R.id.img_error);
 			anim =(AnimationDrawable) mErrorView.getCompoundDrawables()[1];
 		}
-		getLayoutError().setVisibility(View.VISIBLE);
-		mLayoutContent.setVisibility(View.GONE);
+		onLoadFail(mErrorView);
 		if(anim!=null){
 			anim.start();
 		}
 	}
+
+
+	/**
+	 * show the error message
+	 * @param errorMsg error message
+	 */
 	protected void onLoadFail(String errorMsg){
 		onLoadFail();
 		mErrorView.setText(errorMsg);
+	}
+
+	/**
+	 * onLoadFail() and this method can only one be called.
+	 * @link onLoadFail()
+	 * @param view custom error view
+	 */
+	protected void onLoadFail(View view){
+		if(view == null) return;
+		view.setTag("error_view");
+		if(mLayoutError == null){
+			mLayoutError = getLayoutError();
+		}
+		mLayoutError.setVisibility(View.VISIBLE);
+		mLayoutContent.setVisibility(View.GONE);
+		View errorView = mLayoutError.findViewWithTag("error_view");
+		if(errorView == null){
+			mLayoutError.removeAllViews();
+			mLayoutError.addView(view);
+		}
 	}
 	/**
 	 * 
@@ -190,7 +214,8 @@ public class HTitleActivity extends HBaseActivity{
 	 * 2015-3-9 下午4:10:47
 	 *  触摸layout_error，重新加载
 	 */
-	public void onReload(){
+	protected void onReload(){
+
 	}
 	
 	/**
@@ -209,30 +234,53 @@ public class HTitleActivity extends HBaseActivity{
 		return mLeftIcon;
 	}
 
-	protected void setLeftIcon(ImageView mLeftIcon) {
-		this.mLeftIcon = mLeftIcon;
+	/**
+	 * set left ImageView src
+	 * @param resId resource id
+	 */
+	protected void setLeftIconBackgroundResource(int resId){
+		mLeftIcon.setImageResource(resId);
 	}
 
 	protected ImageView getRightIcon() {
 		return mRightIcon;
 	}
-
-	protected void setRightIcon(ImageView mRightIcon) {
-		this.mRightIcon = mRightIcon;
+	/**
+	 * set right ImageView src
+	 * @param resId resource id
+	 */
+	protected void setRightIconBackgroundResource(int resId){
+		mRightIcon.setImageResource(resId);
 	}
 
 	protected TextView getTitleView() {
 		return mTitleView;
 	}
 
-	protected void setTitleView(TextView mTitleView) {
-		this.mTitleView = mTitleView;
+	protected void setTitleTextColor(int color){
+		mTitleView.setTextColor(color);
 	}
+
+	protected void setTitleBarBackgroundColor(int color){
+		mLayoutTitle.setBackgroundColor(color);
+	}
+
+	protected void setTitleBarBackgroundResource(int resId){
+		mLayoutTitle.setBackgroundResource(resId);
+	}
+
+
 	protected FrameLayout getLayoutContent() {
 		return mLayoutContent;
 	}
 
 	protected RelativeLayout getLayoutError() {
+		if(mLayoutError==null){
+			View view=((ViewStub) mRootView.findViewById(R.id.vs_error)).inflate();
+			mLayoutError = (RelativeLayout) view.findViewById(R.id.layout_error);
+			mLayoutError.setOnClickListener(new BaseOnClickListener());
+
+		}
 		return mLayoutError;
 	}
 }

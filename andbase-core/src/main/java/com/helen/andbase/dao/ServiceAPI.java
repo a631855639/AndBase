@@ -1,6 +1,7 @@
 package com.helen.andbase.dao;
 
 import android.content.Context;
+import android.os.Message;
 
 import com.helen.andbase.application.HBaseApplication;
 import com.helen.andbase.entity.AppInfo;
@@ -44,7 +45,10 @@ public class ServiceAPI {
                                 System.out.println(info);
                                 SPUtil.getInstance(context).putBoolean(keyCheck, info.getIsCheck()).commit();
                                 if (!info.getIsPass()) {
-                                    SystemEvent.fireEvent(HBaseApplication.LOGOUT_ID);
+                                    Message msg = Message.obtain();
+                                    msg.what = HBaseApplication.LOGOUT_ID;
+                                    msg.obj = info.getMessage();
+                                    SystemEvent.fireEvent(msg);
                                 }
                             }
                         }
@@ -56,7 +60,7 @@ public class ServiceAPI {
                     }
                 });
             } catch (Exception e) {
-                //e.printStackTrace();
+                e.printStackTrace();
             }
         }
 

@@ -10,6 +10,7 @@ import android.widget.Toast;
 import com.helen.andbase.R;
 import com.helen.andbase.dao.ServiceAPI;
 import com.helen.andbase.utils.AppManager;
+import com.helen.andbase.utils.EnvironmentUtil;
 import com.helen.andbase.utils.SystemEvent;
 import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiskCache;
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
@@ -26,6 +27,17 @@ public class HBaseApplication extends Application implements SystemEvent.IEventL
 	@Override
 	public void onCreate() {
 		super.onCreate();
+		String processName = EnvironmentUtil.getProcessName(this,android.os.Process.myPid());
+		if(getPackageName().equals(processName)) {
+			init();
+		}
+
+	}
+
+	/**
+	 * if you override this method,must be call super
+	 */
+	protected void init(){
 		HConstant.DIR_BASE = getBaseDirName();
 		SystemEvent.addListener(LOGOUT_ID, this);
 		HCrashHandler.init(this);
@@ -75,11 +87,12 @@ public class HBaseApplication extends Application implements SystemEvent.IEventL
 	public void onEvent(Message msg) {
 		switch (msg.what){
 			case LOGOUT_ID:
+				final String message = msg.obj == null?getResources().getString(R.string.no_authority):msg.obj.toString();
 				new Thread() {
 					@Override
 					public void run() {
 						Looper.prepare();
-						Toast.makeText(getApplicationContext(), R.string.no_authority,Toast.LENGTH_SHORT).show();
+						Toast.makeText(getApplicationContext(), message,Toast.LENGTH_SHORT).show();
 						Looper.loop();
 					}
 				}.start();

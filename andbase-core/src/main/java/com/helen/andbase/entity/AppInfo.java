@@ -10,6 +10,7 @@ public class AppInfo extends BmobObject{
     private String appId;//包名
     private Boolean isPass;//是否验证通过
     private Boolean isCheck;//是否需要检测
+    private String message;//提示语
 
     public Boolean getIsCheck() {
         if(isCheck == null){
@@ -39,6 +40,14 @@ public class AppInfo extends BmobObject{
 
     public void setIsPass(Boolean isPass) {
         this.isPass = isPass;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
     }
 
     @Override

@@ -10,6 +10,7 @@ import com.helen.andbase.activity.HTitleActivity;
 
 public class TestRequestActivity extends HTitleActivity {
 	private TextView msg;
+	UpdateAccess access;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -33,7 +34,12 @@ public class TestRequestActivity extends HTitleActivity {
 				msg.setText(result.toString());
 			}
 		};
-		UpdateAccess access = new UpdateAccess(this, requestCallback);
+		access = new UpdateAccess(this, requestCallback);
+		access.execute("");
+	}
+
+	@Override
+	protected void onReload() {
 		access.execute("");
 	}
 }
