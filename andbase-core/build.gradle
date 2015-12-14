@@ -1,4 +1,6 @@
 apply plugin: 'com.android.library'
+//代码覆盖率插件
+apply plugin: 'jacoco'
 //1、添加插件
 apply plugin: 'com.github.dcendents.android-maven'
 apply plugin: 'com.jfrog.bintray'
@@ -13,8 +15,11 @@ android {
     }
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+        debug{
+            testCoverageEnabled true
         }
     }
     lintOptions {
@@ -24,17 +29,39 @@ android {
         exclude 'META-INF/NOTICE'
         exclude 'META-INF/LICENSE'
     }
+    jacoco{
+        version "0.7.4.201502262128"
+    }
+}
+
+task jacocoTestReport(type:JacocoReport){//,dependsOn:"connectedAndroidTest"
+    group = "Reporting"
+    description = "Generate Jacoco coverage reports after running tests."
+    reports{
+        xml.enabled = false
+        html.enabled = true
+        csv.enabled = false
+    }
+    classDirectories = fileTree(
+            dir : "$buildDir/intermediates/classes/debug",
+            excludes : [
+                    '**/*Test.class',
+                    '**/R.class',
+                    '**/R$*.class',
+                    '**/BuildConfig.*',
+                    '**/Manifest*.*'
+            ]
+    )
+    def coverageSourceDirs = ['src/main/java']
+    additionalSourceDirs = files(coverageSourceDirs)
+    sourceDirectories = files(coverageSourceDirs)
+    additionalClassDirs = files(coverageSourceDirs)
+    executionData = files("$buildDir/outputs/code-coverage/connected/coverage.ec")
 }
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'com.android.support:appcompat-v7:22.2.1'
-    //compile 'org.apache.httpcomponents:httpmime:4.5.1'
-    //compile 'org.apache.httpcomponents:httpclient-android:4.3.5.1'
-    //compile 'com.google.code.gson:gson:2.3'
-    //compile 'com.nostra13.universalimageloader:universal-image-loader:1.9.4'
-    //bmob-sdk ：Bmob的android sdk包
-    //compile 'cn.bmob.android:bmob-sdk:3.4.3'
 }
 
 //2、定义版本

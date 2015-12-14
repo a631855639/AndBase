@@ -24,7 +24,7 @@ public class SPUtil {
     public SharedPreferences.Editor mEditor;
 
 
-    public SPUtil (Context context){
+    private SPUtil (Context context){
         mSharedPre = context.getSharedPreferences(context.getPackageName(), Context.MODE_PRIVATE);
         mEditor = mSharedPre.edit();
     }
@@ -32,11 +32,7 @@ public class SPUtil {
 
     public static SPUtil getInstance(Context context){
         if(INSTANCE == null){
-            synchronized (SPUtil.class){
-                if(INSTANCE == null){
-                    INSTANCE = new SPUtil(context);
-                }
-            }
+            INSTANCE = new SPUtil(context);
         }
         return INSTANCE;
     }
