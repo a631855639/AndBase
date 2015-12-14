@@ -1,1 +1,1 @@
-include ':andbase-core', ':demo'
+include ':andbase-core'
