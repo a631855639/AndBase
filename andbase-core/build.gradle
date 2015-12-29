@@ -1,6 +1,8 @@
 apply plugin: 'com.android.library'
 //代码覆盖率插件
 apply plugin: 'jacoco'
+//findbugs
+apply plugin: 'findbugs'
 //1、添加插件
 apply plugin: 'com.github.dcendents.android-maven'
 apply plugin: 'com.jfrog.bintray'
@@ -31,6 +33,23 @@ android {
     }
     jacoco{
         version "0.7.4.201502262128"
+    }
+}
+
+task findbugs(type: FindBugs) {//,dependsOn:"connectedAndroidTest"
+    ignoreFailures = true
+    effort = "default"
+    reportLevel = "medium"
+    //过滤器
+    excludeFilter = new File("${project.rootDir}/findbug_filter.xml")
+    //这里填写项目classes目录
+    classes = files("${project.rootDir}/andbase-core/build/intermediates/classes")
+    source = fileTree('src/main/java')
+    classpath = files()
+    reports {
+        //只能开启一个
+        xml.enabled = true
+        html.enabled = false
     }
 }
 
