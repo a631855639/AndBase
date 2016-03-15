@@ -43,6 +43,10 @@ public class FileUtil {
 		mSDState = Environment.getExternalStorageState();
 	}
 
+	public String getSDCardRoot(){
+		return mSDCardRoot;
+	}
+
 	/**
 	 * 在SD卡上创建文件
 	 * 

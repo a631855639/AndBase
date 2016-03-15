@@ -1,29 +1,26 @@
 package com.helen.andbase.application;
 
 import android.app.Application;
-import android.graphics.Bitmap.Config;
-import android.os.Environment;
 import android.os.Looper;
 import android.os.Message;
 import android.widget.Toast;
 
+import com.facebook.cache.disk.DiskCacheConfig;
+import com.facebook.common.util.ByteConstants;
+import com.facebook.drawee.backends.pipeline.Fresco;
+import com.facebook.imagepipeline.core.ImagePipelineConfig;
 import com.helen.andbase.R;
 import com.helen.andbase.dao.ServiceAPI;
 import com.helen.andbase.utils.AppManager;
 import com.helen.andbase.utils.EnvironmentUtil;
+import com.helen.andbase.utils.FileUtil;
 import com.helen.andbase.utils.SystemEvent;
-import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiskCache;
-import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
-import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
-import com.nostra13.universalimageloader.utils.L;
 
 import java.io.File;
 
 public class HBaseApplication extends Application implements SystemEvent.IEventListener{
 	public static final int LOGOUT_ID = -1;
+
 	@Override
 	public void onCreate() {
 		super.onCreate();
@@ -44,6 +41,7 @@ public class HBaseApplication extends Application implements SystemEvent.IEventL
 		if(isAuthorityCheck()) {
 			ServiceAPI.init(this);
 		}
+		initFresco();
 	}
 
 	/**
@@ -60,28 +58,22 @@ public class HBaseApplication extends Application implements SystemEvent.IEventL
 		return HConstant.DIR_BASE;
 	}
 
-	protected void initImageLoader(int failImgId,int emptyImgId,int loadingImgId) {
-		DisplayImageOptions options = new DisplayImageOptions.Builder()
-		.showImageOnFail(failImgId>0?failImgId:R.drawable.ic_launcher) // 加载图片出现问题，会显示该图片
-		.showImageForEmptyUri(emptyImgId>0?failImgId:R.drawable.ic_launcher)//url为空的时候显示的图片
-		.showImageOnLoading(loadingImgId>0?failImgId:R.drawable.ic_launcher)//图片加载过程中显示的图片
-		.bitmapConfig(Config.RGB_565)
-		.cacheOnDisk(true)//开启硬盘缓存
-		.cacheInMemory(true)//内存缓存
-		.build();
-		ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(
-				this).threadPriority(Thread.NORM_PRIORITY)
-				.defaultDisplayImageOptions(options)
-				.denyCacheImageMultipleSizesInMemory()
-				.diskCacheFileCount(100)
-				.diskCacheSize(10*1024*1024)//缓存容量
-				.diskCacheFileNameGenerator(new Md5FileNameGenerator())
-				.diskCache(new UnlimitedDiskCache(new File(Environment.getExternalStorageDirectory() + HConstant.DIR_CACHE)))
-				.tasksProcessingOrder(QueueProcessingType.LIFO)
+	protected void initFresco(){
+		DiskCacheConfig diskCacheConfig = DiskCacheConfig.newBuilder(this)
+				.setBaseDirectoryPath(new File(FileUtil.getInstance().getSDCardRoot()))
+				.setBaseDirectoryName(HConstant.DIR_IMAGE_CACHE)
+				.setMaxCacheSize(50 * ByteConstants.MB)
+				.setMaxCacheSizeOnLowDiskSpace(10 * ByteConstants.MB)
+				.setMaxCacheSizeOnVeryLowDiskSpace(2 * ByteConstants.MB)
 				.build();
-		L.writeLogs(false);//关闭日志
-		ImageLoader.getInstance().init(config);
+		ImagePipelineConfig config = ImagePipelineConfig.newBuilder(this)
+				//.setNetworkFetcher()
+				.setMainDiskCacheConfig(diskCacheConfig).build();
+		Fresco.initialize(this, config);
+		//清理fresco缓存
+		//Fresco.getImagePipeline().clearCaches();
 	}
+
 
 	@Override
 	public void onEvent(Message msg) {

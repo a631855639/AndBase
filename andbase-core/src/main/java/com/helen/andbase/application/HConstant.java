@@ -10,4 +10,5 @@ public class HConstant {
     public static final String DIR_LOG_CRASH = DIR_BASE+"crash/";
     public static final String DIR_IMAGE = DIR_BASE+"image/";
     public static final String DIR_CACHE = DIR_BASE+"cache/";
+    public static final String DIR_IMAGE_CACHE = DIR_BASE+"image_cache/";
 }
