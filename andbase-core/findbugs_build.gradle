@@ -1,0 +1,19 @@
+//findbugs
+apply plugin: 'findbugs'
+
+task findbugs(type: FindBugs,dependsOn:"connectedAndroidTest") {//
+    ignoreFailures = true
+    effort = "default"
+    reportLevel = "medium"
+    //过滤器
+    excludeFilter = new File("${project.rootDir}/findbug_filter.xml")
+    //这里填写项目classes目录
+    classes = files("${project.rootDir}/andbase-core/build/intermediates/classes")
+    source = fileTree('src/main/java')
+    classpath = files()
+    reports {
+        //只能开启一个
+        xml.enabled = true
+        html.enabled = false
+    }
+}
