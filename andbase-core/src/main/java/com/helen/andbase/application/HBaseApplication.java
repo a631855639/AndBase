@@ -31,6 +31,16 @@ public class HBaseApplication extends Application implements SystemEvent.IEventL
 
 	}
 
+	@Override
+	public void onLowMemory() {
+		super.onLowMemory();
+	}
+
+	@Override
+	public void onTerminate() {
+		super.onTerminate();
+	}
+
 	/**
 	 * if you override this method,must be call super
 	 */

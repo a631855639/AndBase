@@ -4,7 +4,6 @@ import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Build;
-import android.support.annotation.NonNull;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -180,7 +179,7 @@ public class SPUtil {
     /**put、get JSONArray end*/
 
     /**put、get StringList start*/
-    public SPUtil putStringList(String key , @NonNull List<String> value){
+    public SPUtil putStringList(String key , List<String> value){
         StringBuilder sb = new StringBuilder();
         for(String str : value){
             sb.append(str).append(",");

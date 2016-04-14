@@ -16,8 +16,6 @@ public class SystemEvent {
 
     private static final String TAG = "SystemEvent";
     private static SparseArray<ArrayList<WeakReference<IEventListener>>> mEventMap = new SparseArray<ArrayList<WeakReference<IEventListener>>>();
-//    private static Map<Integer, ArrayList<WeakReference<IEventListener>>> mEventMap = new HashMap<Integer, ArrayList<WeakReference<IEventListener>>>();
-//    private static Map<Integer, ArrayList<WeakReference<IEventListener>>> mTmpEventMap = new HashMap<Integer, ArrayList<WeakReference<IEventListener>>>();
 
     /**
      * 自定义的事件监听器
@@ -27,29 +25,14 @@ public class SystemEvent {
     }
 
     /**
-     * 暂存监听器
-     */
-    /*public static void storeListener() {
-        mTmpEventMap.putAll(mEventMap);
-        mEventMap.clear();
-    }*/
-
-    /**
-     * 还原监听器
-     */
-    /*public static void restoreListener() {
-        mEventMap.putAll(mTmpEventMap);
-        mTmpEventMap.clear();
-    }*/
-
-    /**
      * 加入监听器
      * @param eventType eventType > 0
      */
     public static void addListener(int eventType, IEventListener listener) {
         ArrayList<WeakReference<IEventListener>> list = mEventMap.get(eventType);
-        if (null == list)
+        if (null == list) {
             list = new ArrayList<WeakReference<IEventListener>>();
+        }
         // 如果已经存在同一个监听者，就不添加
         for (WeakReference<IEventListener> weakReference : list) {
             IEventListener temp=weakReference.get();

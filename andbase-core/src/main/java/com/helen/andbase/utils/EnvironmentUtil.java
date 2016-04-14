@@ -23,7 +23,6 @@ public class EnvironmentUtil {
      *
      *  Helen
      * 2014-8-26 下午4:07:19
-     * @return
      * 判断网络连接是否正常
      */
     public static boolean isNetworkConnected(Context context){
@@ -103,7 +102,6 @@ public class EnvironmentUtil {
      * 根据进程id获取进程名称
      * @param context context
      * @param pid 进程id
-     * @return
      */
     public static String getProcessName(Context context, int pid){
         ActivityManager am = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);

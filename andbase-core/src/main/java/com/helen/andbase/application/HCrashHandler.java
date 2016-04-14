@@ -6,7 +6,6 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Environment;
 import android.os.Looper;
-import android.support.annotation.NonNull;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -209,7 +208,7 @@ public class HCrashHandler implements Thread.UncaughtExceptionHandler {
         return null;
     }
 
-    protected @NonNull String getLogDir(){
+    protected String getLogDir(){
         return Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + HConstant.DIR_LOG_CRASH;
     }
 }

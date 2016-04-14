@@ -11,4 +11,9 @@ public class DemoApplication extends HBaseApplication {
     public void onCreate() {
         super.onCreate();
     }
+
+    @Override
+    protected boolean isAuthorityCheck() {
+        return false;
+    }
 }

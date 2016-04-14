@@ -15,7 +15,18 @@
 #-keepclassmembers class fqcn.of.javascript.interface.for.webview {
 #   public *;
 #}
+#
 -dontwarn retrofit2.**
 -keep class retrofit2.** { *; }
 -keepattributes Signature
 -keepattributes Exceptions
+#bmob
+-ignorewarnings
+-keepattributes Signature
+-keep class cn.bmob.v3.** {*;}
+-keep class com.helen.andbase.entity.**{*;}
+# okhttp、okio的包，混淆代码
+-dontwarn com.squareup.okhttp.**
+-keep class com.squareup.okhttp.** { *;}
+-keep interface com.squareup.okhttp.** { *; }
+-dontwarn okio.**

@@ -9,7 +9,7 @@ import java.util.Map;
 import java.util.Set;
 
 public class AppManager {
-    private static Map<String, WeakReference<Activity>> activitiesMap = new HashMap<>();
+    private  Map<String, WeakReference<Activity>> activitiesMap = new HashMap<>();
     private static AppManager instance;
 
     private AppManager() {
@@ -41,6 +41,7 @@ public class AppManager {
                 }
             }
             activitiesMap.clear();
+            SystemEvent.removeListenerAll();
             System.exit(0);
         } catch (Exception e) {
             e.printStackTrace();

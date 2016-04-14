@@ -12,8 +12,6 @@ import java.util.List;
 import java.util.Map;
 /***
  * JSON转换工具类
- * @author ZhongY
- * @create 2014-04-25
  */
 public class JsonUtil {
 
@@ -26,29 +24,6 @@ public class JsonUtil {
 		return gson.toJson(ts);
 	}
 
-	/**
-	 * 将对象转换成json格式(并自定义日期格式)
-	 * 
-	 *//*
-	public static String objectToJsonDateSerializer(Object ts,
-			final String dateformat) {
-		String jsonStr = null;
-		gson = new GsonBuilder()
-				.registerTypeHierarchyAdapter(Date.class,
-						new JsonSerializer<Date>() {
-							public JsonElement serialize(Date src,
-									Type typeOfSrc,
-									JsonSerializationContext context) {
-								SimpleDateFormat format = new SimpleDateFormat(
-										dateformat,Locale.getDefault());
-								return new JsonPrimitive(format.format(src));
-							}
-						}).setDateFormat(dateformat).create();
-		if (gson != null) {
-			jsonStr = gson.toJson(ts);
-		}
-		return jsonStr;
-	}*/
 
 	/**
 	 * 将json格式转换成list对象，并准确指定类型

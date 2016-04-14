@@ -3,7 +3,6 @@ package com.helen.andbase.widget;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
-import android.support.annotation.NonNull;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
@@ -66,7 +65,7 @@ public class HAutoCompleteTextView extends AutoCompleteTextView implements
 		 * EditText的宽度 - 图标到控件右边的间距之间我们就算点击了图标，竖直方向就没有考虑
 		 */
 		@Override 
-		public boolean onTouchEvent(@NonNull MotionEvent event) {
+		public boolean onTouchEvent(MotionEvent event) {
 			if (event.getAction() == MotionEvent.ACTION_UP) {
 				if (getCompoundDrawables()[2] != null) {
 	

@@ -17,6 +17,10 @@ public class MainActivity extends HTitleActivity {
 		setTitle("测试");
 	}
 
+	public void testRxAndroid(View v){
+		startActivity(new Intent(this,TestRxAndroidActivity.class));
+	}
+
 	public void testTab(View v){
 		startActivity(new Intent(this, TestTabActivity.class));
 	}
