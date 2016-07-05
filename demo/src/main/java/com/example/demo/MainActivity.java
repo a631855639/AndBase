@@ -28,7 +28,7 @@ public class MainActivity extends HTitleActivity {
 		startActivity(new Intent(this, TestXListViewActivity.class));
 	}
 	public void testRequest(View v){
-		startActivity(new Intent(this, TestRequestActivity.class));
+		startActivity(new Intent(this, TestRetrofitActivity.class));
 	}
 	
 	@Override

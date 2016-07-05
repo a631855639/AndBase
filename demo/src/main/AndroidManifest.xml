@@ -19,7 +19,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".TestRequestActivity"/>
+        <activity android:name=".TestRetrofitActivity"/>
         <activity android:name=".TestTabActivity"/>
         <activity android:name=".TestXListViewActivity"/>
         <activity android:name=".TestRxAndroidActivity"/>
