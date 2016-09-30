@@ -1,20 +1,66 @@
 apply plugin: 'com.android.application'
 
+
+Properties properties = new Properties()
+properties.load(project.file('ad.properties').newDataInputStream())
+
+def String getPropertiesString(Properties pro,String key,String defaultValue){
+    def value = pro.getProperty(key,'');
+    if(value == null || value.equals('')){
+        value = defaultValue;
+    }
+    println(key+"="+value);
+    return value;
+}
+
 android {
     compileSdkVersion 23
     buildToolsVersion '23.0.3'
 
+    def keyAliasStr = getPropertiesString(properties,"keyAlias","demo")
+    def keyPasswordStr = getPropertiesString(properties,"keyPassword","123456")
+    def storeFileStr = getPropertiesString(properties,"storeFile","demo.jks")
+    def storePasswordStr = getPropertiesString(properties,"storePassword","123456")
+
+    signingConfigs {
+        myConfig {
+            keyAlias keyAliasStr
+            keyPassword keyPasswordStr
+            storeFile file(storeFileStr)
+            storePassword storePasswordStr
+        }
+    }
+
     defaultConfig {
-        applicationId "com.example.demo"
-        minSdkVersion 9
+        applicationId properties.getProperty('packageName','com.example.demo')
+        minSdkVersion 14
         targetSdkVersion 23
         versionCode 1
         versionName "1.0"
+        resValue "string","app_name",getPropertiesString(properties,'appName','Demo')
+        //腾讯
+        buildConfigField "String","APP_ID_TX",getPropertiesString(properties,'APP_ID_TX','""')
+        buildConfigField "String","AD_ID_TX",getPropertiesString(properties,'AD_ID_TX',"")
+        //百度
+        manifestPlaceholders=[BaiduMobAd_APP_ID:getPropertiesString(properties,'APP_ID_BD','""')]
+        buildConfigField "String","AD_ID_BD",getPropertiesString(properties,'AD_ID_BD','')
+        //360
+        buildConfigField "String","APP_ID_360",getPropertiesString(properties,'APP_ID_360','""')
+        buildConfigField "String","AD_ID_360",getPropertiesString(properties,'AD_ID_360','""')
+        //有米
+        buildConfigField "String","APP_ID_YM",getPropertiesString(properties,'APP_ID_YM','""')
+        buildConfigField "String","AD_ID_YM",getPropertiesString(properties,'AD_ID_YM',"")
+        buildConfigField "String","SECRET_ID_YM",getPropertiesString(properties,'SECRET_ID_YM','""')
+        //优效
+        buildConfigField "String","APP_ID_YX",getPropertiesString(properties,'APP_ID_YX','""')
+        buildConfigField "String","AD_ID_YX",getPropertiesString(properties,'AD_ID_YX','""')
     }
+
     buildTypes {
         release {
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.myConfig
         }
     }
     packagingOptions {
@@ -29,6 +75,7 @@ android {
         targetCompatibility JavaVersion.VERSION_1_7
     }
 }
+
 //repositories { flatDir { dirs'libs' } }
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])

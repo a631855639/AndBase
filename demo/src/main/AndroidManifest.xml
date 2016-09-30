@@ -2,8 +2,16 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.demo" >
     <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.GET_TASKS"/>
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -11,7 +19,8 @@
         android:name=".DemoApplication"
         android:theme="@style/AppTheme" >
         <activity
-            android:name=".MainActivity"
+            android:name=".AdActivity"
+            android:launchMode="singleTop"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -23,6 +32,69 @@
         <activity android:name=".TestTabActivity"/>
         <activity android:name=".TestXListViewActivity"/>
         <activity android:name=".TestRxAndroidActivity"/>
+
+        <!-- 有米广告 -->
+        <activity
+            android:name="th.ds.wa.BV"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenSize"
+            android:theme="@android:style/Theme.Light.NoTitleBar" >
+        </activity>
+        <service
+            android:name="th.ds.wa.ED"
+            android:exported="false" >
+        </service>
+        <receiver
+            android:name="th.ds.wa.TR" >
+            <intent-filter>
+                <action android:name="android.intent.action.PACKAGE_ADDED" />
+                <data android:scheme="package" />
+            </intent-filter>
+        </receiver>
+
+
+        <!-- 百度广告 -->
+        <meta-data	android:name="BaiduMobAd_APP_ID"	android:value="${BaiduMobAd_APP_ID}"/>
+        <activity
+            android:name="com.baidu.mobads.AppActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
+        <!--360广告-->
+        <service android:name="com.qhad.ads.sdk.service.QhAdService"
+                 android:enabled="true"
+                 android:exported="false"/>
+        <activity android:name="com.qhad.ads.sdk.adcore.QhAdActivity" android:configChanges="orientation|screenSize|keyboardHidden" >
+        </activity>
+        <!--腾讯广告-->
+        <service android:name="com.qq.e.comm.DownloadService" android:exported="false" />
+        <activity android:name="com.qq.e.ads.ADActivity" android:configChanges="keyboard|keyboardHidden|orientation|screenSize" />
+        <!--优效广告-->
+        <activity
+            android:name="com.youxiaoad.ssp.poster.cp.CpAdActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation"
+            android:excludeFromRecents="true"
+            android:launchMode="singleInstance"
+            android:taskAffinity=":cpad"
+            android:theme="@android:style/Theme.Translucent">
+        </activity>
+        <activity
+            android:name="com.youxiaoad.ssp.poster.ui.AdDetailsActivity"
+            android:excludeFromRecents="true"
+            android:launchMode="singleInstance"/>
+        <receiver android:name="com.youxiaoad.ssp.broadcast.AdBroadcast">
+            <intent-filter>
+                <!-- 下载完成广播 -->
+                <action android:name="android.intent.action.DOWNLOAD_COMPLETE"/>
+                <!-- 下载完成点击通知栏 -->
+                <action android:name="android.intent.action.DOWNLOAD_NOTIFICATION_CLICKED"/>
+            </intent-filter>
+            <intent-filter>
+                <!-- 安装完成广播 -->
+                <action android:name="android.intent.action.PACKAGE_ADDED"/>
+                <action android:name="android.intent.action.PACKAGE_REMOVED"/>
+
+                <data android:scheme="package"/>
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>
